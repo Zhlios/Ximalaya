@@ -14,6 +14,7 @@ module.exports = {
           '@/navigator': './src/navigator',
           '@/pages': './src/pages',
           '@/utils': './src/utils',
+          '@/realmModel': './src/realmModel',
         },
       },
     ],

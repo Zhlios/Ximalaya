@@ -1348,6 +1348,13 @@
     "@types/prop-types" "*"
     csstype "^3.0.2"
 
+"@types/realm@^1.13.0":
+  version "1.13.0"
+  resolved "https://registry.npm.taobao.org/@types/realm/download/@types/realm-1.13.0.tgz#d0c0178e727f3732f9337d6e9ccfc45d7b77ef13"
+  integrity sha1-0MAXjnJ/NzL5M31unM/EXXt37xM=
+  dependencies:
+    realm "*"
+
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/@types/stack-utils/download/@types/stack-utils-1.0.1.tgz?cache=0&sync_timestamp=1605057252652&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fstack-utils%2Fdownload%2F%40types%2Fstack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
@@ -6523,7 +6530,7 @@ realm-network-transport@^0.7.0:
     abort-controller "^3.0.0"
     node-fetch "^2.6.0"
 
-realm@^10.2.0:
+realm@*, realm@^10.2.0:
   version "10.2.0"
   resolved "https://registry.npm.taobao.org/realm/download/realm-10.2.0.tgz#0423acd185a1d1505e748a151838e4c15fbb788d"
   integrity sha1-BCOs0YWh0VBedIoVGDjkwV+7eI0=
