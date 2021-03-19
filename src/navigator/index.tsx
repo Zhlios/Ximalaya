@@ -8,6 +8,7 @@ import {
 } from '@react-navigation/stack';
 import Home from '@/pages/home/Home';
 import Detail from '@/pages/Detail';
+import CreateHorse from '@/pages/listen/CreateHorse';
 import {Platform, StatusBar, StyleSheet} from 'react-native';
 import BottomBarTabs from '@/navigator/BottomBarTabs';
 
@@ -16,6 +17,7 @@ export type RootStackParamList = {
     screen?: string;
   };
   Detail: {id: number};
+  CreateHorse: {};
 };
 
 export type RootStackNavigation = StackNavigationProp<RootStackParamList>;
@@ -50,6 +52,10 @@ class Navigator extends React.Component {
             name="Detail"
             options={{headerTitle: '详情'}}
             component={Detail}></Stack.Screen>
+          <Stack.Screen
+            name="CreateHorse"
+            options={{headerTitle: '详情'}}
+            component={CreateHorse}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     );

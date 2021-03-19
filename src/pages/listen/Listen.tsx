@@ -1,5 +1,12 @@
 import React from 'react';
-import {Button, Text, View, FlatList, ListRenderItemInfo} from 'react-native';
+import {
+  Button,
+  Text,
+  View,
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+} from 'react-native';
 import {HorseModel} from '@/realmModel/horseModel';
 import RealmAction from '@/realmModel/realmAction';
 import HorseItem from '@/pages/listen/HorseItem';
@@ -19,7 +26,7 @@ interface IProps extends ModelState {
   navigation: RootStackNavigation;
 }
 
-class Listen extends React.PureComponent<IProps> {
+class Listen extends React.Component<IProps> {
   addHorseData = () => {
     let obj: HorseModel = {
       _id: 1001,
@@ -44,9 +51,7 @@ class Listen extends React.PureComponent<IProps> {
   getAllData = () => {
     RealmAction.getAllHorse();
   };
-
   componentDidMount() {
-    console.log('kkkkk');
     const {dispatch} = this.props;
     dispatch({
       type: 'listen/fetchHorseList',
@@ -65,12 +70,13 @@ class Listen extends React.PureComponent<IProps> {
   render() {
     const {horseList} = this.props;
     return (
-      <View>
+      <View style={styles.content}>
         <Text>Listen</Text>
         <Button onPress={this.addHorseData} title="添加数据"></Button>
         <Button onPress={this.deleteAllData} title="删除数据"></Button>
         <Button onPress={this.getAllData} title="获取数据"></Button>
         <FlatList
+          style={styles.flatlist}
           data={horseList}
           renderItem={this.renderHorseItem}
           keyExtractor={this.keyExtractor}></FlatList>
@@ -80,3 +86,13 @@ class Listen extends React.PureComponent<IProps> {
 }
 
 export default connector(Listen);
+
+const styles = StyleSheet.create({
+  content: {
+    flexDirection: 'column',
+    flex: 1,
+  },
+  flatlist: {
+    flex: 1,
+  },
+});

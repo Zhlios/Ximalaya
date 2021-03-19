@@ -12,6 +12,7 @@ import Found from '@/pages/found/Found';
 import Account from '@/pages/account/Account';
 import {RootStackNavigation, RootStackParamList} from '@/navigator/index';
 import IconFont from '@/assets/iconfont';
+import {Button} from 'react-native';
 
 export type BottomTabParamsList = {
   HomeTab: undefined;
@@ -53,24 +54,63 @@ class BottomBarTabs extends React.Component<IProps> {
   componentDidMount() {
     this.setOption();
   }
-
   componentDidUpdate() {
     this.setOption();
   }
 
   setOption = () => {
     const {navigation, route} = this.props;
-    const routeName = getFocusedRouteNameFromRoute(route);
+    const routeName = getFocusedRouteNameFromRoute(route) || '';
+    switch (routeName) {
+      case 'HomeTab':
+        {
+          navigation.setOptions({
+            headerTransparent: true,
+            headerTitle: '',
+            headerRight: () => null,
+          });
+        }
+
+        break;
+      case 'Listen':
+        {
+          navigation.setOptions({
+            headerTransparent: false,
+            headerRight: () => (
+              <Button
+                onPress={() => {
+                  navigation.push('CreateHorse', {});
+                }}
+                title="编辑"></Button>
+            ),
+            headerTitle: getHeaderTitle(routeName),
+          });
+        }
+        break;
+      case 'Found':
+        {
+          navigation.setOptions({
+            headerTransparent: false,
+            headerRight: () => null,
+            headerTitle: getHeaderTitle(routeName),
+          });
+        }
+        break;
+      case 'Account':
+        {
+          navigation.setOptions({
+            headerTransparent: false,
+            headerRight: () => null,
+            headerTitle: getHeaderTitle(routeName),
+          });
+        }
+        break;
+
+      default:
+        break;
+    }
     if (routeName === 'HomeTab') {
-      navigation.setOptions({
-        headerTransparent: true,
-        headerTitle: '',
-      });
     } else {
-      navigation.setOptions({
-        headerTransparent: false,
-        headerTitle: getHeaderTitle(routeName),
-      });
     }
   };
 
