@@ -1,7 +1,5 @@
 import Realm from 'realm';
-
-import HorseModel from '@/realmModel/horseModel';
-
-const realm = new Realm({path: 'hos', schema: [HorseModel.scheme]});
+import Horse from '@/realmModel/horseModel';
+const realm = new Realm({schema: [Horse.scheme]});
 
 export default realm;

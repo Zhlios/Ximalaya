@@ -1,12 +1,28 @@
 import React from 'react';
-import {Button, Text, View} from 'react-native';
-import Horse from '@/realmModel/horseModel';
+import {Button, Text, View, FlatList, ListRenderItemInfo} from 'react-native';
 import {HorseModel} from '@/realmModel/horseModel';
+import RealmAction from '@/realmModel/realmAction';
+import HorseItem from '@/pages/listen/HorseItem';
+import {connect, ConnectedProps} from 'react-redux';
+import {RootStackNavigation} from '@/navigator/index';
+import {RootState} from '@/models/index';
 
-class Listen extends React.Component {
+const mapStateProps = ({listen, loading}: RootState) => ({
+  ...listen,
+});
+
+const connector = connect(mapStateProps);
+
+type ModelState = ConnectedProps<typeof connector>;
+
+interface IProps extends ModelState {
+  navigation: RootStackNavigation;
+}
+
+class Listen extends React.PureComponent<IProps> {
   addHorseData = () => {
     let obj: HorseModel = {
-      _id: 0,
+      _id: 1001,
       horseName: '123',
       run: '12',
       jockey: 'xiaobai',
@@ -18,19 +34,49 @@ class Listen extends React.Component {
       Rtg_Add: '13',
       gear: '15',
     };
-    const horse = new Horse();
-    horse.writeData(obj);
-    horse.getAllData();
+    RealmAction.addHorse(obj);
+    RealmAction.getAllHorse();
+  };
+
+  deleteAllData = () => {
+    //  Horse.removeAllData();
+  };
+  getAllData = () => {
+    RealmAction.getAllHorse();
+  };
+
+  componentDidMount() {
+    console.log('kkkkk');
+    const {dispatch} = this.props;
+    dispatch({
+      type: 'listen/fetchHorseList',
+      params: {},
+    });
+  }
+
+  renderHorseItem = ({item}: ListRenderItemInfo<HorseModel>) => {
+    return <HorseItem data={item}></HorseItem>;
+  };
+
+  keyExtractor = (item: HorseModel, index: number) => {
+    return item._id.toString();
   };
 
   render() {
+    const {horseList} = this.props;
     return (
       <View>
         <Text>Listen</Text>
         <Button onPress={this.addHorseData} title="添加数据"></Button>
+        <Button onPress={this.deleteAllData} title="删除数据"></Button>
+        <Button onPress={this.getAllData} title="获取数据"></Button>
+        <FlatList
+          data={horseList}
+          renderItem={this.renderHorseItem}
+          keyExtractor={this.keyExtractor}></FlatList>
       </View>
     );
   }
 }
 
-export default Listen;
+export default connector(Listen);

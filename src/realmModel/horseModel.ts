@@ -1,7 +1,3 @@
-import Realm from 'realm';
-import realm from '@/realmModel/index';
-import homeModel from '@/models/home';
-
 export interface HorseModel {
   _id: number;
   run: string;
@@ -16,7 +12,7 @@ export interface HorseModel {
   gear: string;
 }
 
-class Horse {
+export default class Horse {
   public data: HorseModel;
   static schemeName: string = 'horseMatch';
   constructor(data: HorseModel) {
@@ -38,27 +34,4 @@ class Horse {
     },
     primaryKey: '_id',
   };
-
-  private getHorseId = () => {
-    const matchList = realm.objects(Horse.schemeName);
-    if (matchList.length > 0) {
-      return matchList.length + 1;
-    } else {
-      return 0;
-    }
-  };
-
-  public writeData() {
-    realm.write(() => {
-      this.data._id = this.getHorseId();
-      realm.create(Horse.schemeName, this.data);
-    });
-  }
-
-  public getAllData() {
-    const data = realm.objects(Horse.schemeName);
-    console.log(data);
-  }
 }
-
-export default Horse;

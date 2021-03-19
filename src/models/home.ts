@@ -1,7 +1,7 @@
 import {Effect, Model} from 'dva-core-ts';
 import {Reducer} from 'redux';
 import {getCarousel, getChannel, getGuess} from '@/api/index';
-import {RootState} from '.';
+import {RootState} from './index';
 
 export interface ICarousel {
   id: string;
