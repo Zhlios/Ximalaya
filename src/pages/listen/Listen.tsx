@@ -71,10 +71,6 @@ class Listen extends React.Component<IProps> {
     const {horseList} = this.props;
     return (
       <View style={styles.content}>
-        <Text>Listen</Text>
-        <Button onPress={this.addHorseData} title="添加数据"></Button>
-        <Button onPress={this.deleteAllData} title="删除数据"></Button>
-        <Button onPress={this.getAllData} title="获取数据"></Button>
         <FlatList
           style={styles.flatlist}
           data={horseList}

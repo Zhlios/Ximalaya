@@ -19,8 +19,14 @@ interface IProps extends ModelState {
 
 class CreateHorse extends Component<IProps> {
   onPress = () => {
-    const {data} = this.props;
-    console.log(data, 'hhhh');
+    const {dispatch, navigation} = this.props;
+    dispatch({
+      type: 'createHorse/saveHorse',
+      params: {},
+      callback: () => {
+        navigation.pop();
+      },
+    });
   };
 
   onChange = (text: string, key: string) => {
@@ -35,7 +41,7 @@ class CreateHorse extends Component<IProps> {
   };
 
   render() {
-    const {data} = this.props;
+    const {data, alertMsg} = this.props;
     console.log(data, 'kkkkkk');
     return (
       <ScrollView style={styles.content}>
@@ -140,6 +146,7 @@ class CreateHorse extends Component<IProps> {
             }}
           />
         </View>
+        {alertMsg.length ? <Text style={styles.altMsg}>{alertMsg}</Text> : null}
         <View style={styles.touch_b}>
           <Touchable style={styles.touch} onPress={this.onPress}>
             <Text style={styles.touch_t}>保存数据</Text>
@@ -194,5 +201,11 @@ const styles = StyleSheet.create({
   touch_t: {
     color: 'white',
     fontSize: 18,
+  },
+  altMsg: {
+    marginTop: 20,
+    color: '#F56C6C',
+    fontSize: 16,
+    textAlign: 'center',
   },
 });

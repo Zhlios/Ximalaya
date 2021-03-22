@@ -6,6 +6,7 @@ import RealmAction from '@/realmModel/realmAction';
 
 interface CreateHorseState {
   data: HorseModel;
+  alertMsg: string;
 }
 
 interface CreateHorseModel extends Model {
@@ -15,7 +16,7 @@ interface CreateHorseModel extends Model {
     setState: Reducer<CreateHorseState>;
   };
   effects: {
-    createHorse: Effect;
+    saveHorse: Effect;
     changeValue: Effect;
   };
 }
@@ -34,6 +35,7 @@ const initialState: CreateHorseState = {
     Rtg_Add: '',
     gear: '',
   },
+  alertMsg: '',
 };
 
 const createHorse: CreateHorseModel = {
@@ -48,19 +50,38 @@ const createHorse: CreateHorseModel = {
       yield put({
         type: 'setState',
         payload: {
-          data: data,
+          data: {...data},
         },
       });
     },
-    *createHorse({params}, {call, put}) {
-      const data = RealmAction.getAllHorse();
-      console.log(data);
+    *saveHorse({params, callback}, {call, put, select}) {
+      const data = yield select((state: RootState) => state.createHorse.data);
+      for (const value in data) {
+        if (data[value].length < 1) {
+          console.log('数据为空');
+          yield put({
+            type: 'setState',
+            payload: {
+              alertMsg: `${value}数据不能为空`,
+            },
+          });
+          return;
+        }
+      }
+
       yield put({
         type: 'setState',
         payload: {
-          horseList: data,
+          alertMsg: ``,
         },
       });
+      RealmAction.addHorse(data);
+
+      yield put({type: 'listen/fetchHorseList', payload: {}});
+
+      if (callback && typeof callback === 'function') {
+        callback();
+      }
     },
   },
   reducers: {
